@@ -1,0 +1,370 @@
+\doxysection{I2C Bit-\/\+Banging}
+\hypertarget{group__i2c__bit__banging}{}\label{group__i2c__bit__banging}\index{I2C Bit-\/Banging@{I2C Bit-\/Banging}}
+
+
+Low-\/level functions for manual I2C communication.  
+
+
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{group__i2c__bit__banging_ga2cade698267beb86ccaa38c14d35ab0f}{I2\+C\+\_\+\+SDA\+\_\+\+PIN}}~A4
+\begin{DoxyCompactList}\small\item\em Define the pin for the I2C Serial Data (SDA) line. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__i2c__bit__banging_ga0e4e08bab2fb484136d18b067bef372c}{I2\+C\+\_\+\+SCL\+\_\+\+PIN}}~A5
+\begin{DoxyCompactList}\small\item\em Define the pin for the I2C Serial Clock (SCL) line. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2\+C\+\_\+\+DELAY\+\_\+\+US}}~5
+\begin{DoxyCompactList}\small\item\em A small delay in microseconds to meet I2C timing specifications. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{group__i2c__bit__banging_gaac96cb4832eec6436e192e9948fa5c60}{i2c\+\_\+sda\+\_\+high}} ()
+\begin{DoxyCompactList}\small\item\em Sets the SDA line high by configuring the pin as an input with the internal pull-\/up disabled. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__i2c__bit__banging_ga9233e603e8047e4b3d34fd32f5f0d200}{i2c\+\_\+sda\+\_\+low}} ()
+\begin{DoxyCompactList}\small\item\em Sets the SDA line low. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__i2c__bit__banging_gacededb6b0df81968e26522ff4249fe5f}{i2c\+\_\+scl\+\_\+high}} ()
+\begin{DoxyCompactList}\small\item\em Sets the SCL line high. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__i2c__bit__banging_gab28495cecbec9b9e075af98d8dc87057}{i2c\+\_\+scl\+\_\+low}} ()
+\begin{DoxyCompactList}\small\item\em Sets the SCL line low. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{group__i2c__bit__banging_gad88c7dd0081c12a4e2f317d230a73d25}{i2c\+\_\+read\+\_\+sda}} ()
+\begin{DoxyCompactList}\small\item\em Reads the current state of the SDA pin. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__i2c__bit__banging_gafa8b4a70b38269978478d3c2c01ad6af}{i2c\+\_\+start}} ()
+\begin{DoxyCompactList}\small\item\em Generates the I2C START condition. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__i2c__bit__banging_ga5149736c791184da23d658764e9da861}{i2c\+\_\+stop}} ()
+\begin{DoxyCompactList}\small\item\em Generates the I2C STOP condition. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{group__i2c__bit__banging_gaafc0ee8bf1132c5e628ba6c88a4976b6}{i2c\+\_\+write\+\_\+byte}} (uint8\+\_\+t data)
+\begin{DoxyCompactList}\small\item\em Writes a single byte over the I2C bus. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{group__i2c__bit__banging_ga64b014f36d2926812e24d6f3be8e126b}{i2c\+\_\+read\+\_\+byte}} (bool ack)
+\begin{DoxyCompactList}\small\item\em Reads a single byte from the I2C bus. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Low-\/level functions for manual I2C communication. 
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}\label{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e} 
+\index{I2C Bit-\/Banging@{I2C Bit-\/Banging}!I2C\_DELAY\_US@{I2C\_DELAY\_US}}
+\index{I2C\_DELAY\_US@{I2C\_DELAY\_US}!I2C Bit-\/Banging@{I2C Bit-\/Banging}}
+\doxysubsubsection{\texorpdfstring{I2C\_DELAY\_US}{I2C\_DELAY\_US}}
+{\footnotesize\ttfamily \#define I2\+C\+\_\+\+DELAY\+\_\+\+US~5}
+
+
+
+A small delay in microseconds to meet I2C timing specifications. 
+
+
+
+Definition at line \mbox{\hyperlink{low__level__mpu6050__interfacing_8ino_source_l00028}{28}} of file \mbox{\hyperlink{low__level__mpu6050__interfacing_8ino_source}{low\+\_\+level\+\_\+mpu6050\+\_\+interfacing.\+ino}}.
+
+\Hypertarget{group__i2c__bit__banging_ga0e4e08bab2fb484136d18b067bef372c}\label{group__i2c__bit__banging_ga0e4e08bab2fb484136d18b067bef372c} 
+\index{I2C Bit-\/Banging@{I2C Bit-\/Banging}!I2C\_SCL\_PIN@{I2C\_SCL\_PIN}}
+\index{I2C\_SCL\_PIN@{I2C\_SCL\_PIN}!I2C Bit-\/Banging@{I2C Bit-\/Banging}}
+\doxysubsubsection{\texorpdfstring{I2C\_SCL\_PIN}{I2C\_SCL\_PIN}}
+{\footnotesize\ttfamily \#define I2\+C\+\_\+\+SCL\+\_\+\+PIN~A5}
+
+
+
+Define the pin for the I2C Serial Clock (SCL) line. 
+
+
+
+Definition at line \mbox{\hyperlink{low__level__mpu6050__interfacing_8ino_source_l00024}{24}} of file \mbox{\hyperlink{low__level__mpu6050__interfacing_8ino_source}{low\+\_\+level\+\_\+mpu6050\+\_\+interfacing.\+ino}}.
+
+\Hypertarget{group__i2c__bit__banging_ga2cade698267beb86ccaa38c14d35ab0f}\label{group__i2c__bit__banging_ga2cade698267beb86ccaa38c14d35ab0f} 
+\index{I2C Bit-\/Banging@{I2C Bit-\/Banging}!I2C\_SDA\_PIN@{I2C\_SDA\_PIN}}
+\index{I2C\_SDA\_PIN@{I2C\_SDA\_PIN}!I2C Bit-\/Banging@{I2C Bit-\/Banging}}
+\doxysubsubsection{\texorpdfstring{I2C\_SDA\_PIN}{I2C\_SDA\_PIN}}
+{\footnotesize\ttfamily \#define I2\+C\+\_\+\+SDA\+\_\+\+PIN~A4}
+
+
+
+Define the pin for the I2C Serial Data (SDA) line. 
+
+
+
+Definition at line \mbox{\hyperlink{low__level__mpu6050__interfacing_8ino_source_l00020}{20}} of file \mbox{\hyperlink{low__level__mpu6050__interfacing_8ino_source}{low\+\_\+level\+\_\+mpu6050\+\_\+interfacing.\+ino}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{group__i2c__bit__banging_ga64b014f36d2926812e24d6f3be8e126b}\label{group__i2c__bit__banging_ga64b014f36d2926812e24d6f3be8e126b} 
+\index{I2C Bit-\/Banging@{I2C Bit-\/Banging}!i2c\_read\_byte@{i2c\_read\_byte}}
+\index{i2c\_read\_byte@{i2c\_read\_byte}!I2C Bit-\/Banging@{I2C Bit-\/Banging}}
+\doxysubsubsection{\texorpdfstring{i2c\_read\_byte()}{i2c\_read\_byte()}}
+{\footnotesize\ttfamily uint8\+\_\+t i2c\+\_\+read\+\_\+byte (\begin{DoxyParamCaption}\item[{bool}]{ack }\end{DoxyParamCaption})}
+
+
+
+Reads a single byte from the I2C bus. 
+
+This function reads a byte from the slave device and then sends an acknowledgment (ACK) or non-\/acknowledgment (NACK) based on the {\ttfamily ack} parameter.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ack} & A boolean flag to determine whether to send an ACK ({\ttfamily true}) or a NACK ({\ttfamily false}) after reading the byte. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The 8-\/bit data byte read from the bus. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{low__level__mpu6050__interfacing_8ino_source_l00261}{261}} of file \mbox{\hyperlink{low__level__mpu6050__interfacing_8ino_source}{low\+\_\+level\+\_\+mpu6050\+\_\+interfacing.\+ino}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00262\ \ \ uint8\_t\ data\ =\ 0;}
+\DoxyCodeLine{00263\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gaac96cb4832eec6436e192e9948fa5c60}{i2c\_sda\_high}}();\ \textcolor{comment}{//\ Release\ the\ SDA\ line\ to\ allow\ the\ slave\ to\ drive\ it.}}
+\DoxyCodeLine{00264\ }
+\DoxyCodeLine{00265\ \ \ \textcolor{comment}{//\ Read\ 8\ bits.}}
+\DoxyCodeLine{00266\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 7;\ i\ >=\ 0;\ i-\/-\/)\ \{}
+\DoxyCodeLine{00267\ \ \ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gacededb6b0df81968e26522ff4249fe5f}{i2c\_scl\_high}}();}
+\DoxyCodeLine{00268\ \ \ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{00269\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{group__i2c__bit__banging_gad88c7dd0081c12a4e2f317d230a73d25}{i2c\_read\_sda}}())\ \{}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ data\ |=\ (1\ <<\ i);}
+\DoxyCodeLine{00271\ \ \ \ \ \}}
+\DoxyCodeLine{00272\ \ \ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gab28495cecbec9b9e075af98d8dc87057}{i2c\_scl\_low}}();}
+\DoxyCodeLine{00273\ \ \ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{00274\ \ \ \}}
+\DoxyCodeLine{00275\ }
+\DoxyCodeLine{00276\ \ \ \textcolor{comment}{//\ Send\ ACK\ or\ NACK.}}
+\DoxyCodeLine{00277\ \ \ \textcolor{keywordflow}{if}\ (ack)\ \{}
+\DoxyCodeLine{00278\ \ \ \ \ \mbox{\hyperlink{group__i2c__bit__banging_ga9233e603e8047e4b3d34fd32f5f0d200}{i2c\_sda\_low}}();\ \textcolor{comment}{//\ Pull\ SDA\ low\ for\ an\ ACK.}}
+\DoxyCodeLine{00279\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00280\ \ \ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gaac96cb4832eec6436e192e9948fa5c60}{i2c\_sda\_high}}();\ \textcolor{comment}{//\ Keep\ SDA\ high\ for\ a\ NACK.}}
+\DoxyCodeLine{00281\ \ \ \}}
+\DoxyCodeLine{00282\ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{00283\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gacededb6b0df81968e26522ff4249fe5f}{i2c\_scl\_high}}();}
+\DoxyCodeLine{00284\ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{00285\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gab28495cecbec9b9e075af98d8dc87057}{i2c\_scl\_low}}();}
+\DoxyCodeLine{00286\ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{00287\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_ga9233e603e8047e4b3d34fd32f5f0d200}{i2c\_sda\_low}}();\ \textcolor{comment}{//\ Restore\ SDA\ low\ for\ the\ next\ operation.}}
+\DoxyCodeLine{00288\ }
+\DoxyCodeLine{00289\ \ \ \textcolor{keywordflow}{return}\ data;}
+\DoxyCodeLine{00290\ \}}
+
+\end{DoxyCode}
+\Hypertarget{group__i2c__bit__banging_gad88c7dd0081c12a4e2f317d230a73d25}\label{group__i2c__bit__banging_gad88c7dd0081c12a4e2f317d230a73d25} 
+\index{I2C Bit-\/Banging@{I2C Bit-\/Banging}!i2c\_read\_sda@{i2c\_read\_sda}}
+\index{i2c\_read\_sda@{i2c\_read\_sda}!I2C Bit-\/Banging@{I2C Bit-\/Banging}}
+\doxysubsubsection{\texorpdfstring{i2c\_read\_sda()}{i2c\_read\_sda()}}
+{\footnotesize\ttfamily bool i2c\+\_\+read\+\_\+sda (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Reads the current state of the SDA pin. 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if the pin is high, {\ttfamily false} if it is low. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{low__level__mpu6050__interfacing_8ino_source_l00169}{169}} of file \mbox{\hyperlink{low__level__mpu6050__interfacing_8ino_source}{low\+\_\+level\+\_\+mpu6050\+\_\+interfacing.\+ino}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00170\ \ \ pinMode(\mbox{\hyperlink{group__i2c__bit__banging_ga2cade698267beb86ccaa38c14d35ab0f}{I2C\_SDA\_PIN}},\ INPUT);}
+\DoxyCodeLine{00171\ \ \ \textcolor{keywordflow}{return}\ digitalRead(\mbox{\hyperlink{group__i2c__bit__banging_ga2cade698267beb86ccaa38c14d35ab0f}{I2C\_SDA\_PIN}});}
+\DoxyCodeLine{00172\ \}}
+
+\end{DoxyCode}
+\Hypertarget{group__i2c__bit__banging_gacededb6b0df81968e26522ff4249fe5f}\label{group__i2c__bit__banging_gacededb6b0df81968e26522ff4249fe5f} 
+\index{I2C Bit-\/Banging@{I2C Bit-\/Banging}!i2c\_scl\_high@{i2c\_scl\_high}}
+\index{i2c\_scl\_high@{i2c\_scl\_high}!I2C Bit-\/Banging@{I2C Bit-\/Banging}}
+\doxysubsubsection{\texorpdfstring{i2c\_scl\_high()}{i2c\_scl\_high()}}
+{\footnotesize\ttfamily void i2c\+\_\+scl\+\_\+high (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Sets the SCL line high. 
+
+This is achieved by setting the pin as an input to release it. 
+
+Definition at line \mbox{\hyperlink{low__level__mpu6050__interfacing_8ino_source_l00148}{148}} of file \mbox{\hyperlink{low__level__mpu6050__interfacing_8ino_source}{low\+\_\+level\+\_\+mpu6050\+\_\+interfacing.\+ino}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00149\ \ \ pinMode(\mbox{\hyperlink{group__i2c__bit__banging_ga0e4e08bab2fb484136d18b067bef372c}{I2C\_SCL\_PIN}},\ INPUT);}
+\DoxyCodeLine{00150\ \}}
+
+\end{DoxyCode}
+\Hypertarget{group__i2c__bit__banging_gab28495cecbec9b9e075af98d8dc87057}\label{group__i2c__bit__banging_gab28495cecbec9b9e075af98d8dc87057} 
+\index{I2C Bit-\/Banging@{I2C Bit-\/Banging}!i2c\_scl\_low@{i2c\_scl\_low}}
+\index{i2c\_scl\_low@{i2c\_scl\_low}!I2C Bit-\/Banging@{I2C Bit-\/Banging}}
+\doxysubsubsection{\texorpdfstring{i2c\_scl\_low()}{i2c\_scl\_low()}}
+{\footnotesize\ttfamily void i2c\+\_\+scl\+\_\+low (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Sets the SCL line low. 
+
+This is achieved by setting the pin as an output and driving it low. 
+
+Definition at line \mbox{\hyperlink{low__level__mpu6050__interfacing_8ino_source_l00158}{158}} of file \mbox{\hyperlink{low__level__mpu6050__interfacing_8ino_source}{low\+\_\+level\+\_\+mpu6050\+\_\+interfacing.\+ino}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00159\ \ \ pinMode(\mbox{\hyperlink{group__i2c__bit__banging_ga0e4e08bab2fb484136d18b067bef372c}{I2C\_SCL\_PIN}},\ OUTPUT);}
+\DoxyCodeLine{00160\ \ \ digitalWrite(\mbox{\hyperlink{group__i2c__bit__banging_ga0e4e08bab2fb484136d18b067bef372c}{I2C\_SCL\_PIN}},\ LOW);}
+\DoxyCodeLine{00161\ \}}
+
+\end{DoxyCode}
+\Hypertarget{group__i2c__bit__banging_gaac96cb4832eec6436e192e9948fa5c60}\label{group__i2c__bit__banging_gaac96cb4832eec6436e192e9948fa5c60} 
+\index{I2C Bit-\/Banging@{I2C Bit-\/Banging}!i2c\_sda\_high@{i2c\_sda\_high}}
+\index{i2c\_sda\_high@{i2c\_sda\_high}!I2C Bit-\/Banging@{I2C Bit-\/Banging}}
+\doxysubsubsection{\texorpdfstring{i2c\_sda\_high()}{i2c\_sda\_high()}}
+{\footnotesize\ttfamily void i2c\+\_\+sda\+\_\+high (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Sets the SDA line high by configuring the pin as an input with the internal pull-\/up disabled. 
+
+I2C requires the bus lines to be open-\/drain, so setting a pin as an input effectively "{}releases"{} it, allowing an external pull-\/up resistor to pull it high. 
+
+Definition at line \mbox{\hyperlink{low__level__mpu6050__interfacing_8ino_source_l00127}{127}} of file \mbox{\hyperlink{low__level__mpu6050__interfacing_8ino_source}{low\+\_\+level\+\_\+mpu6050\+\_\+interfacing.\+ino}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00128\ \ \ pinMode(\mbox{\hyperlink{group__i2c__bit__banging_ga2cade698267beb86ccaa38c14d35ab0f}{I2C\_SDA\_PIN}},\ INPUT);}
+\DoxyCodeLine{00129\ \}}
+
+\end{DoxyCode}
+\Hypertarget{group__i2c__bit__banging_ga9233e603e8047e4b3d34fd32f5f0d200}\label{group__i2c__bit__banging_ga9233e603e8047e4b3d34fd32f5f0d200} 
+\index{I2C Bit-\/Banging@{I2C Bit-\/Banging}!i2c\_sda\_low@{i2c\_sda\_low}}
+\index{i2c\_sda\_low@{i2c\_sda\_low}!I2C Bit-\/Banging@{I2C Bit-\/Banging}}
+\doxysubsubsection{\texorpdfstring{i2c\_sda\_low()}{i2c\_sda\_low()}}
+{\footnotesize\ttfamily void i2c\+\_\+sda\+\_\+low (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Sets the SDA line low. 
+
+This is achieved by setting the pin as an output and driving it low. 
+
+Definition at line \mbox{\hyperlink{low__level__mpu6050__interfacing_8ino_source_l00137}{137}} of file \mbox{\hyperlink{low__level__mpu6050__interfacing_8ino_source}{low\+\_\+level\+\_\+mpu6050\+\_\+interfacing.\+ino}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00138\ \ \ pinMode(\mbox{\hyperlink{group__i2c__bit__banging_ga2cade698267beb86ccaa38c14d35ab0f}{I2C\_SDA\_PIN}},\ OUTPUT);}
+\DoxyCodeLine{00139\ \ \ digitalWrite(\mbox{\hyperlink{group__i2c__bit__banging_ga2cade698267beb86ccaa38c14d35ab0f}{I2C\_SDA\_PIN}},\ LOW);}
+\DoxyCodeLine{00140\ \}}
+
+\end{DoxyCode}
+\Hypertarget{group__i2c__bit__banging_gafa8b4a70b38269978478d3c2c01ad6af}\label{group__i2c__bit__banging_gafa8b4a70b38269978478d3c2c01ad6af} 
+\index{I2C Bit-\/Banging@{I2C Bit-\/Banging}!i2c\_start@{i2c\_start}}
+\index{i2c\_start@{i2c\_start}!I2C Bit-\/Banging@{I2C Bit-\/Banging}}
+\doxysubsubsection{\texorpdfstring{i2c\_start()}{i2c\_start()}}
+{\footnotesize\ttfamily void i2c\+\_\+start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Generates the I2C START condition. 
+
+An I2C START condition is a high-\/to-\/low transition on the SDA line while the SCL line is high. 
+
+Definition at line \mbox{\hyperlink{low__level__mpu6050__interfacing_8ino_source_l00181}{181}} of file \mbox{\hyperlink{low__level__mpu6050__interfacing_8ino_source}{low\+\_\+level\+\_\+mpu6050\+\_\+interfacing.\+ino}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00182\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gaac96cb4832eec6436e192e9948fa5c60}{i2c\_sda\_high}}();}
+\DoxyCodeLine{00183\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gacededb6b0df81968e26522ff4249fe5f}{i2c\_scl\_high}}();}
+\DoxyCodeLine{00184\ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{00185\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_ga9233e603e8047e4b3d34fd32f5f0d200}{i2c\_sda\_low}}();}
+\DoxyCodeLine{00186\ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{00187\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gab28495cecbec9b9e075af98d8dc87057}{i2c\_scl\_low}}();}
+\DoxyCodeLine{00188\ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{00189\ \}}
+
+\end{DoxyCode}
+\Hypertarget{group__i2c__bit__banging_ga5149736c791184da23d658764e9da861}\label{group__i2c__bit__banging_ga5149736c791184da23d658764e9da861} 
+\index{I2C Bit-\/Banging@{I2C Bit-\/Banging}!i2c\_stop@{i2c\_stop}}
+\index{i2c\_stop@{i2c\_stop}!I2C Bit-\/Banging@{I2C Bit-\/Banging}}
+\doxysubsubsection{\texorpdfstring{i2c\_stop()}{i2c\_stop()}}
+{\footnotesize\ttfamily void i2c\+\_\+stop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Generates the I2C STOP condition. 
+
+An I2C STOP condition is a low-\/to-\/high transition on the SDA line while the SCL line is high. 
+
+Definition at line \mbox{\hyperlink{low__level__mpu6050__interfacing_8ino_source_l00198}{198}} of file \mbox{\hyperlink{low__level__mpu6050__interfacing_8ino_source}{low\+\_\+level\+\_\+mpu6050\+\_\+interfacing.\+ino}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00199\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_ga9233e603e8047e4b3d34fd32f5f0d200}{i2c\_sda\_low}}();}
+\DoxyCodeLine{00200\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gacededb6b0df81968e26522ff4249fe5f}{i2c\_scl\_high}}();}
+\DoxyCodeLine{00201\ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{00202\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gaac96cb4832eec6436e192e9948fa5c60}{i2c\_sda\_high}}();}
+\DoxyCodeLine{00203\ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{00204\ \}}
+
+\end{DoxyCode}
+\Hypertarget{group__i2c__bit__banging_gaafc0ee8bf1132c5e628ba6c88a4976b6}\label{group__i2c__bit__banging_gaafc0ee8bf1132c5e628ba6c88a4976b6} 
+\index{I2C Bit-\/Banging@{I2C Bit-\/Banging}!i2c\_write\_byte@{i2c\_write\_byte}}
+\index{i2c\_write\_byte@{i2c\_write\_byte}!I2C Bit-\/Banging@{I2C Bit-\/Banging}}
+\doxysubsubsection{\texorpdfstring{i2c\_write\_byte()}{i2c\_write\_byte()}}
+{\footnotesize\ttfamily bool i2c\+\_\+write\+\_\+byte (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{data }\end{DoxyParamCaption})}
+
+
+
+Writes a single byte over the I2C bus. 
+
+This function sends a single byte of data, most significant bit (MSB) first, and then waits for an acknowledgment (ACK) from the slave device.
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & The byte to write. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\ttfamily true} if an ACK is received (SDA is pulled low by the slave), {\ttfamily false} otherwise (NACK). 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{low__level__mpu6050__interfacing_8ino_source_l00217}{217}} of file \mbox{\hyperlink{low__level__mpu6050__interfacing_8ino_source}{low\+\_\+level\+\_\+mpu6050\+\_\+interfacing.\+ino}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00218\ \ \ \textcolor{comment}{//\ Loop\ through\ each\ of\ the\ 8\ bits,\ MSB\ first.}}
+\DoxyCodeLine{00219\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 7;\ i\ >=\ 0;\ i-\/-\/)\ \{}
+\DoxyCodeLine{00220\ \ \ \ \ \textcolor{comment}{//\ Set\ the\ SDA\ line\ based\ on\ the\ current\ bit.}}
+\DoxyCodeLine{00221\ \ \ \ \ \textcolor{keywordflow}{if}\ ((data\ >>\ i)\ \&\ 0x01)\ \{}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gaac96cb4832eec6436e192e9948fa5c60}{i2c\_sda\_high}}();}
+\DoxyCodeLine{00223\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \mbox{\hyperlink{group__i2c__bit__banging_ga9233e603e8047e4b3d34fd32f5f0d200}{i2c\_sda\_low}}();}
+\DoxyCodeLine{00225\ \ \ \ \ \}}
+\DoxyCodeLine{00226\ \ \ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{00227\ }
+\DoxyCodeLine{00228\ \ \ \ \ \textcolor{comment}{//\ Clock\ the\ bit\ out\ by\ pulsing\ SCL\ high.}}
+\DoxyCodeLine{00229\ \ \ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gacededb6b0df81968e26522ff4249fe5f}{i2c\_scl\_high}}();}
+\DoxyCodeLine{00230\ \ \ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{00231\ \ \ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gab28495cecbec9b9e075af98d8dc87057}{i2c\_scl\_low}}();}
+\DoxyCodeLine{00232\ \ \ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{00233\ \ \ \}}
+\DoxyCodeLine{00234\ }
+\DoxyCodeLine{00235\ \ \ \textcolor{comment}{//\ The\ 9th\ clock\ pulse\ is\ for\ the\ ACK/NACK.}}
+\DoxyCodeLine{00236\ \ \ \textcolor{comment}{//\ The\ slave\ will\ pull\ SDA\ low\ for\ an\ ACK.}}
+\DoxyCodeLine{00237\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gaac96cb4832eec6436e192e9948fa5c60}{i2c\_sda\_high}}();\ \textcolor{comment}{//\ Release\ the\ SDA\ line.}}
+\DoxyCodeLine{00238\ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{00239\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gacededb6b0df81968e26522ff4249fe5f}{i2c\_scl\_high}}();}
+\DoxyCodeLine{00240\ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{00241\ \ \ \textcolor{keywordtype}{bool}\ ack\ =\ !\mbox{\hyperlink{group__i2c__bit__banging_gad88c7dd0081c12a4e2f317d230a73d25}{i2c\_read\_sda}}();\ \textcolor{comment}{//\ Read\ the\ ACK\ bit.}}
+\DoxyCodeLine{00242\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gab28495cecbec9b9e075af98d8dc87057}{i2c\_scl\_low}}();}
+\DoxyCodeLine{00243\ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{00244\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_ga9233e603e8047e4b3d34fd32f5f0d200}{i2c\_sda\_low}}();\ \textcolor{comment}{//\ Restore\ SDA\ to\ low\ for\ the\ next\ operation.}}
+\DoxyCodeLine{00245\ }
+\DoxyCodeLine{00246\ \ \ \textcolor{keywordflow}{return}\ ack;}
+\DoxyCodeLine{00247\ \}}
+
+\end{DoxyCode}

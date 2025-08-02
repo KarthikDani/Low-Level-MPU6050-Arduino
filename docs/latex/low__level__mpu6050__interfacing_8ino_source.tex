@@ -1,0 +1,318 @@
+\doxysection{low\+\_\+level\+\_\+mpu6050\+\_\+interfacing.\+ino}
+\hypertarget{low__level__mpu6050__interfacing_8ino_source}{}\label{low__level__mpu6050__interfacing_8ino_source}\mbox{\hyperlink{low__level__mpu6050__interfacing_8ino}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00011}00011\ \textcolor{comment}{//\ -\/-\/\ I2C\ Bit-\/Banging\ Functions\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00020}\mbox{\hyperlink{group__i2c__bit__banging_ga2cade698267beb86ccaa38c14d35ab0f}{00020}}\ \textcolor{preprocessor}{\#define\ I2C\_SDA\_PIN\ A4}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00024}\mbox{\hyperlink{group__i2c__bit__banging_ga0e4e08bab2fb484136d18b067bef372c}{00024}}\ \textcolor{preprocessor}{\#define\ I2C\_SCL\_PIN\ A5}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00028}\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{00028}}\ \textcolor{preprocessor}{\#define\ I2C\_DELAY\_US\ 5}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00037}\mbox{\hyperlink{group__mpu6050__driver_ga6a26d06d2f863deedd849612a6c2a4e4}{00037}}\ \textcolor{preprocessor}{\#define\ MPU6050\_ADDRESS\ 0x68}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00041}\mbox{\hyperlink{group__mpu6050__driver_ga7292e8b450174614ce5bd411ec98ac56}{00041}}\ \textcolor{preprocessor}{\#define\ MPU6050\_WHO\_AM\_I\_REG\ 0x75}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00045}\mbox{\hyperlink{group__mpu6050__driver_gac8e6174d5a02ed531329494959e57304}{00045}}\ \textcolor{preprocessor}{\#define\ MPU6050\_PWR\_MGMT\_1\_REG\ 0x6B}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00049}\mbox{\hyperlink{group__mpu6050__driver_gaeab81c73034a21153b844f22a0014014}{00049}}\ \textcolor{preprocessor}{\#define\ MPU6050\_ACCEL\_XOUT\_H\_REG\ 0x3B}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00053}\mbox{\hyperlink{group__mpu6050__driver_ga3f8f12551c1f0dc6fed6deed880bf1ce}{00053}}\ \textcolor{preprocessor}{\#define\ MPU6050\_ACCEL\_XOUT\_L\_REG\ 0x3C}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00057}\mbox{\hyperlink{group__mpu6050__driver_gaeae6c0fbc47aa2c613342fce2cc45372}{00057}}\ \textcolor{preprocessor}{\#define\ MPU6050\_GYRO\_XOUT\_H\_REG\ 0x43}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00061}\mbox{\hyperlink{group__mpu6050__driver_ga6356f82a3d376ab0068744257aa65998}{00061}}\ \textcolor{preprocessor}{\#define\ MPU6050\_GYRO\_XOUT\_L\_REG\ 0x44}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00065}\mbox{\hyperlink{group__mpu6050__driver_gac0a6cab209fbf707e4b0c5426e89e458}{00065}}\ \textcolor{preprocessor}{\#define\ MPU6050\_TEMP\_OUT\_H\_REG\ 0x41}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00072}\mbox{\hyperlink{structaccel__data__t}{00072}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00073}\mbox{\hyperlink{structaccel__data__t_a4dc115b2eec199cfca25b3b9c63d1c86}{00073}}\ \ \ int16\_t\ \mbox{\hyperlink{structaccel__data__t_a4dc115b2eec199cfca25b3b9c63d1c86}{x}};\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00074}\mbox{\hyperlink{structaccel__data__t_a083b7f2fc3599bfcebb3cd2ce8c2c125}{00074}}\ \ \ int16\_t\ \mbox{\hyperlink{structaccel__data__t_a083b7f2fc3599bfcebb3cd2ce8c2c125}{y}};\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00075}\mbox{\hyperlink{structaccel__data__t_a423158bef0e0aae37f0d4eda9084a56c}{00075}}\ \ \ int16\_t\ \mbox{\hyperlink{structaccel__data__t_a423158bef0e0aae37f0d4eda9084a56c}{z}};\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00076}00076\ \}\ \mbox{\hyperlink{structaccel__data__t}{accel\_data\_t}};}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00083}\mbox{\hyperlink{structgyro__data__t}{00083}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00084}\mbox{\hyperlink{structgyro__data__t_a46ad0e29684b152863913763b1c7a7aa}{00084}}\ \ \ int16\_t\ \mbox{\hyperlink{structgyro__data__t_a46ad0e29684b152863913763b1c7a7aa}{x}};\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00085}\mbox{\hyperlink{structgyro__data__t_a529b8ebb86c46804d3510bda2ab5f57e}{00085}}\ \ \ int16\_t\ \mbox{\hyperlink{structgyro__data__t_a529b8ebb86c46804d3510bda2ab5f57e}{y}};\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00086}\mbox{\hyperlink{structgyro__data__t_a9c6c9ad873619cc6fc940cff2fafcac6}{00086}}\ \ \ int16\_t\ \mbox{\hyperlink{structgyro__data__t_a9c6c9ad873619cc6fc940cff2fafcac6}{z}};\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00087}00087\ \}\ \mbox{\hyperlink{structgyro__data__t}{gyro\_data\_t}};}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00094}\mbox{\hyperlink{structaccel__float__data__t}{00094}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00095}\mbox{\hyperlink{structaccel__float__data__t_ad332b06a0c8851338f01d2c32688c9f0}{00095}}\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structaccel__float__data__t_ad332b06a0c8851338f01d2c32688c9f0}{x}};\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00096}\mbox{\hyperlink{structaccel__float__data__t_a3735ba6870821476e506873601e2a716}{00096}}\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structaccel__float__data__t_a3735ba6870821476e506873601e2a716}{y}};\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00097}\mbox{\hyperlink{structaccel__float__data__t_a8aacea966ced911d504261ecb3f953ab}{00097}}\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structaccel__float__data__t_a8aacea966ced911d504261ecb3f953ab}{z}};\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00098}00098\ \}\ \mbox{\hyperlink{structaccel__float__data__t}{accel\_float\_data\_t}};}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00105}\mbox{\hyperlink{structgyro__float__data__t}{00105}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00106}\mbox{\hyperlink{structgyro__float__data__t_aeece2f6f1e411a60ea7f82a2d8cfe6f3}{00106}}\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structgyro__float__data__t_aeece2f6f1e411a60ea7f82a2d8cfe6f3}{x}};\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00107}\mbox{\hyperlink{structgyro__float__data__t_aeb79091bd2205bee812f5a74d0423c4d}{00107}}\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structgyro__float__data__t_aeb79091bd2205bee812f5a74d0423c4d}{y}};\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00108}\mbox{\hyperlink{structgyro__float__data__t_aa66ac75a9c10ef2bd128d18097f6bda5}{00108}}\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structgyro__float__data__t_aa66ac75a9c10ef2bd128d18097f6bda5}{z}};\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00109}00109\ \}\ \mbox{\hyperlink{structgyro__float__data__t}{gyro\_float\_data\_t}};}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00116}\mbox{\hyperlink{structtemp__float__data__t}{00116}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00117}\mbox{\hyperlink{structtemp__float__data__t_a690eebced6bdb08517b937f9ccc14b1c}{00117}}\ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structtemp__float__data__t_a690eebced6bdb08517b937f9ccc14b1c}{c}};\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00118}00118\ \}\ \mbox{\hyperlink{structtemp__float__data__t}{temp\_float\_data\_t}};}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00119}00119\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00127}\mbox{\hyperlink{group__i2c__bit__banging_gaac96cb4832eec6436e192e9948fa5c60}{00127}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{group__i2c__bit__banging_gaac96cb4832eec6436e192e9948fa5c60}{i2c\_sda\_high}}()\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00128}00128\ \ \ pinMode(\mbox{\hyperlink{group__i2c__bit__banging_ga2cade698267beb86ccaa38c14d35ab0f}{I2C\_SDA\_PIN}},\ INPUT);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00129}00129\ \}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00130}00130\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00137}\mbox{\hyperlink{group__i2c__bit__banging_ga9233e603e8047e4b3d34fd32f5f0d200}{00137}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{group__i2c__bit__banging_ga9233e603e8047e4b3d34fd32f5f0d200}{i2c\_sda\_low}}()\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00138}00138\ \ \ pinMode(\mbox{\hyperlink{group__i2c__bit__banging_ga2cade698267beb86ccaa38c14d35ab0f}{I2C\_SDA\_PIN}},\ OUTPUT);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00139}00139\ \ \ digitalWrite(\mbox{\hyperlink{group__i2c__bit__banging_ga2cade698267beb86ccaa38c14d35ab0f}{I2C\_SDA\_PIN}},\ LOW);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00140}00140\ \}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00141}00141\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00148}\mbox{\hyperlink{group__i2c__bit__banging_gacededb6b0df81968e26522ff4249fe5f}{00148}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{group__i2c__bit__banging_gacededb6b0df81968e26522ff4249fe5f}{i2c\_scl\_high}}()\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00149}00149\ \ \ pinMode(\mbox{\hyperlink{group__i2c__bit__banging_ga0e4e08bab2fb484136d18b067bef372c}{I2C\_SCL\_PIN}},\ INPUT);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00150}00150\ \}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00151}00151\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00158}\mbox{\hyperlink{group__i2c__bit__banging_gab28495cecbec9b9e075af98d8dc87057}{00158}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{group__i2c__bit__banging_gab28495cecbec9b9e075af98d8dc87057}{i2c\_scl\_low}}()\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00159}00159\ \ \ pinMode(\mbox{\hyperlink{group__i2c__bit__banging_ga0e4e08bab2fb484136d18b067bef372c}{I2C\_SCL\_PIN}},\ OUTPUT);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00160}00160\ \ \ digitalWrite(\mbox{\hyperlink{group__i2c__bit__banging_ga0e4e08bab2fb484136d18b067bef372c}{I2C\_SCL\_PIN}},\ LOW);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00161}00161\ \}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00162}00162\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00169}\mbox{\hyperlink{group__i2c__bit__banging_gad88c7dd0081c12a4e2f317d230a73d25}{00169}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{group__i2c__bit__banging_gad88c7dd0081c12a4e2f317d230a73d25}{i2c\_read\_sda}}()\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00170}00170\ \ \ pinMode(\mbox{\hyperlink{group__i2c__bit__banging_ga2cade698267beb86ccaa38c14d35ab0f}{I2C\_SDA\_PIN}},\ INPUT);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00171}00171\ \ \ \textcolor{keywordflow}{return}\ digitalRead(\mbox{\hyperlink{group__i2c__bit__banging_ga2cade698267beb86ccaa38c14d35ab0f}{I2C\_SDA\_PIN}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00172}00172\ \}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00173}00173\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00181}\mbox{\hyperlink{group__i2c__bit__banging_gafa8b4a70b38269978478d3c2c01ad6af}{00181}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{group__i2c__bit__banging_gafa8b4a70b38269978478d3c2c01ad6af}{i2c\_start}}()\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00182}00182\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gaac96cb4832eec6436e192e9948fa5c60}{i2c\_sda\_high}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00183}00183\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gacededb6b0df81968e26522ff4249fe5f}{i2c\_scl\_high}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00184}00184\ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00185}00185\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_ga9233e603e8047e4b3d34fd32f5f0d200}{i2c\_sda\_low}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00186}00186\ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00187}00187\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gab28495cecbec9b9e075af98d8dc87057}{i2c\_scl\_low}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00188}00188\ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00189}00189\ \}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00190}00190\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00198}\mbox{\hyperlink{group__i2c__bit__banging_ga5149736c791184da23d658764e9da861}{00198}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{group__i2c__bit__banging_ga5149736c791184da23d658764e9da861}{i2c\_stop}}()\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00199}00199\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_ga9233e603e8047e4b3d34fd32f5f0d200}{i2c\_sda\_low}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00200}00200\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gacededb6b0df81968e26522ff4249fe5f}{i2c\_scl\_high}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00201}00201\ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00202}00202\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gaac96cb4832eec6436e192e9948fa5c60}{i2c\_sda\_high}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00203}00203\ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00204}00204\ \}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00205}00205\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00217}\mbox{\hyperlink{group__i2c__bit__banging_gaafc0ee8bf1132c5e628ba6c88a4976b6}{00217}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{group__i2c__bit__banging_gaafc0ee8bf1132c5e628ba6c88a4976b6}{i2c\_write\_byte}}(uint8\_t\ data)\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00218}00218\ \ \ \textcolor{comment}{//\ Loop\ through\ each\ of\ the\ 8\ bits,\ MSB\ first.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00219}00219\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 7;\ i\ >=\ 0;\ i-\/-\/)\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00220}00220\ \ \ \ \ \textcolor{comment}{//\ Set\ the\ SDA\ line\ based\ on\ the\ current\ bit.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00221}00221\ \ \ \ \ \textcolor{keywordflow}{if}\ ((data\ >>\ i)\ \&\ 0x01)\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00222}00222\ \ \ \ \ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gaac96cb4832eec6436e192e9948fa5c60}{i2c\_sda\_high}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00223}00223\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00224}00224\ \ \ \ \ \ \ \mbox{\hyperlink{group__i2c__bit__banging_ga9233e603e8047e4b3d34fd32f5f0d200}{i2c\_sda\_low}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00225}00225\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00226}00226\ \ \ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00227}00227\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00228}00228\ \ \ \ \ \textcolor{comment}{//\ Clock\ the\ bit\ out\ by\ pulsing\ SCL\ high.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00229}00229\ \ \ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gacededb6b0df81968e26522ff4249fe5f}{i2c\_scl\_high}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00230}00230\ \ \ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00231}00231\ \ \ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gab28495cecbec9b9e075af98d8dc87057}{i2c\_scl\_low}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00232}00232\ \ \ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00233}00233\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00234}00234\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00235}00235\ \ \ \textcolor{comment}{//\ The\ 9th\ clock\ pulse\ is\ for\ the\ ACK/NACK.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00236}00236\ \ \ \textcolor{comment}{//\ The\ slave\ will\ pull\ SDA\ low\ for\ an\ ACK.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00237}00237\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gaac96cb4832eec6436e192e9948fa5c60}{i2c\_sda\_high}}();\ \textcolor{comment}{//\ Release\ the\ SDA\ line.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00238}00238\ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00239}00239\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gacededb6b0df81968e26522ff4249fe5f}{i2c\_scl\_high}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00240}00240\ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00241}00241\ \ \ \textcolor{keywordtype}{bool}\ ack\ =\ !\mbox{\hyperlink{group__i2c__bit__banging_gad88c7dd0081c12a4e2f317d230a73d25}{i2c\_read\_sda}}();\ \textcolor{comment}{//\ Read\ the\ ACK\ bit.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00242}00242\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gab28495cecbec9b9e075af98d8dc87057}{i2c\_scl\_low}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00243}00243\ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00244}00244\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_ga9233e603e8047e4b3d34fd32f5f0d200}{i2c\_sda\_low}}();\ \textcolor{comment}{//\ Restore\ SDA\ to\ low\ for\ the\ next\ operation.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00245}00245\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00246}00246\ \ \ \textcolor{keywordflow}{return}\ ack;}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00247}00247\ \}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00248}00248\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00261}\mbox{\hyperlink{group__i2c__bit__banging_ga64b014f36d2926812e24d6f3be8e126b}{00261}}\ uint8\_t\ \mbox{\hyperlink{group__i2c__bit__banging_ga64b014f36d2926812e24d6f3be8e126b}{i2c\_read\_byte}}(\textcolor{keywordtype}{bool}\ ack)\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00262}00262\ \ \ uint8\_t\ data\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00263}00263\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gaac96cb4832eec6436e192e9948fa5c60}{i2c\_sda\_high}}();\ \textcolor{comment}{//\ Release\ the\ SDA\ line\ to\ allow\ the\ slave\ to\ drive\ it.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00264}00264\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00265}00265\ \ \ \textcolor{comment}{//\ Read\ 8\ bits.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00266}00266\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 7;\ i\ >=\ 0;\ i-\/-\/)\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00267}00267\ \ \ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gacededb6b0df81968e26522ff4249fe5f}{i2c\_scl\_high}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00268}00268\ \ \ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00269}00269\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{group__i2c__bit__banging_gad88c7dd0081c12a4e2f317d230a73d25}{i2c\_read\_sda}}())\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00270}00270\ \ \ \ \ \ \ data\ |=\ (1\ <<\ i);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00271}00271\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00272}00272\ \ \ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gab28495cecbec9b9e075af98d8dc87057}{i2c\_scl\_low}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00273}00273\ \ \ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00274}00274\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00275}00275\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00276}00276\ \ \ \textcolor{comment}{//\ Send\ ACK\ or\ NACK.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00277}00277\ \ \ \textcolor{keywordflow}{if}\ (ack)\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00278}00278\ \ \ \ \ \mbox{\hyperlink{group__i2c__bit__banging_ga9233e603e8047e4b3d34fd32f5f0d200}{i2c\_sda\_low}}();\ \textcolor{comment}{//\ Pull\ SDA\ low\ for\ an\ ACK.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00279}00279\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00280}00280\ \ \ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gaac96cb4832eec6436e192e9948fa5c60}{i2c\_sda\_high}}();\ \textcolor{comment}{//\ Keep\ SDA\ high\ for\ a\ NACK.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00281}00281\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00282}00282\ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00283}00283\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gacededb6b0df81968e26522ff4249fe5f}{i2c\_scl\_high}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00284}00284\ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00285}00285\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gab28495cecbec9b9e075af98d8dc87057}{i2c\_scl\_low}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00286}00286\ \ \ delayMicroseconds(\mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2C\_DELAY\_US}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00287}00287\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_ga9233e603e8047e4b3d34fd32f5f0d200}{i2c\_sda\_low}}();\ \textcolor{comment}{//\ Restore\ SDA\ low\ for\ the\ next\ operation.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00288}00288\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00289}00289\ \ \ \textcolor{keywordflow}{return}\ data;}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00290}00290\ \}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00291}00291\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00302}\mbox{\hyperlink{group__mpu6050__driver_ga4fc83ca86f303a8dc5d181b7c0789dc1}{00302}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{group__mpu6050__driver_ga4fc83ca86f303a8dc5d181b7c0789dc1}{mpu6050\_write\_register}}(uint8\_t\ reg,\ uint8\_t\ value)\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00303}00303\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gafa8b4a70b38269978478d3c2c01ad6af}{i2c\_start}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00304}00304\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gaafc0ee8bf1132c5e628ba6c88a4976b6}{i2c\_write\_byte}}(\mbox{\hyperlink{group__mpu6050__driver_ga6a26d06d2f863deedd849612a6c2a4e4}{MPU6050\_ADDRESS}}\ <<\ 1\ |\ 0x00);\ \textcolor{comment}{//\ Write\ address\ (0)}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00305}00305\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gaafc0ee8bf1132c5e628ba6c88a4976b6}{i2c\_write\_byte}}(reg);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Register\ address}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00306}00306\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gaafc0ee8bf1132c5e628ba6c88a4976b6}{i2c\_write\_byte}}(value);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Data\ to\ write}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00307}00307\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_ga5149736c791184da23d658764e9da861}{i2c\_stop}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00308}00308\ \}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00309}00309\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00321}\mbox{\hyperlink{group__mpu6050__driver_ga1e638f29b9df6e977fdf1f7222bc9ee4}{00321}}\ uint8\_t\ \mbox{\hyperlink{group__mpu6050__driver_ga1e638f29b9df6e977fdf1f7222bc9ee4}{mpu6050\_read\_register}}(uint8\_t\ reg)\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00322}00322\ \ \ uint8\_t\ data;}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00323}00323\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gafa8b4a70b38269978478d3c2c01ad6af}{i2c\_start}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00324}00324\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gaafc0ee8bf1132c5e628ba6c88a4976b6}{i2c\_write\_byte}}(\mbox{\hyperlink{group__mpu6050__driver_ga6a26d06d2f863deedd849612a6c2a4e4}{MPU6050\_ADDRESS}}\ <<\ 1\ |\ 0x00);\ \textcolor{comment}{//\ Write\ address\ (0)}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00325}00325\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gaafc0ee8bf1132c5e628ba6c88a4976b6}{i2c\_write\_byte}}(reg);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Register\ address}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00326}00326\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_ga5149736c791184da23d658764e9da861}{i2c\_stop}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00327}00327\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00328}00328\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gafa8b4a70b38269978478d3c2c01ad6af}{i2c\_start}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00329}00329\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gaafc0ee8bf1132c5e628ba6c88a4976b6}{i2c\_write\_byte}}(\mbox{\hyperlink{group__mpu6050__driver_ga6a26d06d2f863deedd849612a6c2a4e4}{MPU6050\_ADDRESS}}\ <<\ 1\ |\ 0x01);\ \textcolor{comment}{//\ Read\ address\ (1)}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00330}00330\ \ \ data\ =\ \mbox{\hyperlink{group__i2c__bit__banging_ga64b014f36d2926812e24d6f3be8e126b}{i2c\_read\_byte}}(\textcolor{keyword}{false});\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Read\ the\ byte\ and\ send\ NACK}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00331}00331\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_ga5149736c791184da23d658764e9da861}{i2c\_stop}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00332}00332\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00333}00333\ \ \ \textcolor{keywordflow}{return}\ data;}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00334}00334\ \}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00335}00335\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00344}\mbox{\hyperlink{group__mpu6050__driver_ga0120bfecb4935f28380174f5b8903856}{00344}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{group__mpu6050__driver_ga0120bfecb4935f28380174f5b8903856}{mpu6050\_read\_bytes}}(uint8\_t\ reg,\ uint8\_t*\ buffer,\ uint8\_t\ count)\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00345}00345\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gafa8b4a70b38269978478d3c2c01ad6af}{i2c\_start}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00346}00346\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gaafc0ee8bf1132c5e628ba6c88a4976b6}{i2c\_write\_byte}}(\mbox{\hyperlink{group__mpu6050__driver_ga6a26d06d2f863deedd849612a6c2a4e4}{MPU6050\_ADDRESS}}\ <<\ 1\ |\ 0x00);\ \textcolor{comment}{//\ Write\ address\ (0)}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00347}00347\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gaafc0ee8bf1132c5e628ba6c88a4976b6}{i2c\_write\_byte}}(reg);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Starting\ register\ address}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00348}00348\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_ga5149736c791184da23d658764e9da861}{i2c\_stop}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00349}00349\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00350}00350\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gafa8b4a70b38269978478d3c2c01ad6af}{i2c\_start}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00351}00351\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_gaafc0ee8bf1132c5e628ba6c88a4976b6}{i2c\_write\_byte}}(\mbox{\hyperlink{group__mpu6050__driver_ga6a26d06d2f863deedd849612a6c2a4e4}{MPU6050\_ADDRESS}}\ <<\ 1\ |\ 0x01);\ \textcolor{comment}{//\ Read\ address\ (1)}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00352}00352\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ count;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00353}00353\ \ \ \ \ buffer[i]\ =\ \mbox{\hyperlink{group__i2c__bit__banging_ga64b014f36d2926812e24d6f3be8e126b}{i2c\_read\_byte}}(i\ <\ count\ -\/\ 1);\ \textcolor{comment}{//\ ACK\ for\ all\ but\ the\ last\ byte}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00354}00354\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00355}00355\ \ \ \mbox{\hyperlink{group__i2c__bit__banging_ga5149736c791184da23d658764e9da861}{i2c\_stop}}();}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00356}00356\ \}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00357}00357\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00364}\mbox{\hyperlink{group__mpu6050__driver_ga7254d98b858439f756cf53e8e2655883}{00364}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{group__mpu6050__driver_ga7254d98b858439f756cf53e8e2655883}{mpu6050\_read\_accel\_data}}(\mbox{\hyperlink{structaccel__data__t}{accel\_data\_t}}*\ accel)\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00365}00365\ \ \ uint8\_t\ buffer[6];}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00366}00366\ \ \ \mbox{\hyperlink{group__mpu6050__driver_ga0120bfecb4935f28380174f5b8903856}{mpu6050\_read\_bytes}}(\mbox{\hyperlink{group__mpu6050__driver_gaeab81c73034a21153b844f22a0014014}{MPU6050\_ACCEL\_XOUT\_H\_REG}},\ buffer,\ 6);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00367}00367\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00368}00368\ \ \ accel-\/>\mbox{\hyperlink{structaccel__data__t_a4dc115b2eec199cfca25b3b9c63d1c86}{x}}\ =\ (int16\_t)(buffer[0]\ <<\ 8\ |\ buffer[1]);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00369}00369\ \ \ accel-\/>\mbox{\hyperlink{structaccel__data__t_a083b7f2fc3599bfcebb3cd2ce8c2c125}{y}}\ =\ (int16\_t)(buffer[2]\ <<\ 8\ |\ buffer[3]);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00370}00370\ \ \ accel-\/>\mbox{\hyperlink{structaccel__data__t_a423158bef0e0aae37f0d4eda9084a56c}{z}}\ =\ (int16\_t)(buffer[4]\ <<\ 8\ |\ buffer[5]);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00371}00371\ \}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00372}00372\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00379}\mbox{\hyperlink{group__mpu6050__driver_ga1ec0e6a3ef7b7258f4169598f85aab90}{00379}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{group__mpu6050__driver_ga1ec0e6a3ef7b7258f4169598f85aab90}{mpu6050\_read\_gyro\_data}}(\mbox{\hyperlink{structgyro__data__t}{gyro\_data\_t}}*\ gyro)\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00380}00380\ \ \ uint8\_t\ buffer[6];}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00381}00381\ \ \ \mbox{\hyperlink{group__mpu6050__driver_ga0120bfecb4935f28380174f5b8903856}{mpu6050\_read\_bytes}}(\mbox{\hyperlink{group__mpu6050__driver_gaeae6c0fbc47aa2c613342fce2cc45372}{MPU6050\_GYRO\_XOUT\_H\_REG}},\ buffer,\ 6);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00382}00382\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00383}00383\ \ \ gyro-\/>\mbox{\hyperlink{structgyro__data__t_a46ad0e29684b152863913763b1c7a7aa}{x}}\ =\ (int16\_t)(buffer[0]\ <<\ 8\ |\ buffer[1]);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00384}00384\ \ \ gyro-\/>\mbox{\hyperlink{structgyro__data__t_a529b8ebb86c46804d3510bda2ab5f57e}{y}}\ =\ (int16\_t)(buffer[2]\ <<\ 8\ |\ buffer[3]);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00385}00385\ \ \ gyro-\/>\mbox{\hyperlink{structgyro__data__t_a9c6c9ad873619cc6fc940cff2fafcac6}{z}}\ =\ (int16\_t)(buffer[4]\ <<\ 8\ |\ buffer[5]);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00386}00386\ \}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00387}00387\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00396}\mbox{\hyperlink{group__mpu6050__driver_gae6818ef9d99e8293c55b0e2ae12a4bc9}{00396}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{group__mpu6050__driver_gae6818ef9d99e8293c55b0e2ae12a4bc9}{mpu6050\_read\_accel\_g}}(\mbox{\hyperlink{structaccel__float__data__t}{accel\_float\_data\_t}}*\ accel\_g)\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00397}00397\ \ \ \mbox{\hyperlink{structaccel__data__t}{accel\_data\_t}}\ raw\_accel;}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00398}00398\ \ \ \mbox{\hyperlink{group__mpu6050__driver_ga7254d98b858439f756cf53e8e2655883}{mpu6050\_read\_accel\_data}}(\&raw\_accel);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00399}00399\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00400}00400\ \ \ \textcolor{comment}{//\ The\ MPU6050\ is\ configured\ for\ +/-\/2g\ range,\ with\ a\ resolution\ of\ 16\ bits.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00401}00401\ \ \ \textcolor{comment}{//\ The\ conversion\ factor\ is\ 2.0g\ /\ 32768.0\ LSB.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00402}00402\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ scale\_factor\ =\ 2.0\ /\ 32768.0;}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00403}00403\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00404}00404\ \ \ accel\_g-\/>\mbox{\hyperlink{structaccel__float__data__t_ad332b06a0c8851338f01d2c32688c9f0}{x}}\ =\ (float)raw\_accel.\mbox{\hyperlink{structaccel__data__t_a4dc115b2eec199cfca25b3b9c63d1c86}{x}}\ *\ scale\_factor;}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00405}00405\ \ \ accel\_g-\/>\mbox{\hyperlink{structaccel__float__data__t_a3735ba6870821476e506873601e2a716}{y}}\ =\ (float)raw\_accel.\mbox{\hyperlink{structaccel__data__t_a083b7f2fc3599bfcebb3cd2ce8c2c125}{y}}\ *\ scale\_factor;}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00406}00406\ \ \ accel\_g-\/>\mbox{\hyperlink{structaccel__float__data__t_a8aacea966ced911d504261ecb3f953ab}{z}}\ =\ (float)raw\_accel.\mbox{\hyperlink{structaccel__data__t_a423158bef0e0aae37f0d4eda9084a56c}{z}}\ *\ scale\_factor;}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00407}00407\ \}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00408}00408\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00417}\mbox{\hyperlink{group__mpu6050__driver_ga7b86e12141f8e0f7e45864785e048ff4}{00417}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{group__mpu6050__driver_ga7b86e12141f8e0f7e45864785e048ff4}{mpu6050\_read\_gyro\_dps}}(\mbox{\hyperlink{structgyro__float__data__t}{gyro\_float\_data\_t}}*\ gyro\_dps)\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00418}00418\ \ \ \mbox{\hyperlink{structgyro__data__t}{gyro\_data\_t}}\ raw\_gyro;}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00419}00419\ \ \ \mbox{\hyperlink{group__mpu6050__driver_ga1ec0e6a3ef7b7258f4169598f85aab90}{mpu6050\_read\_gyro\_data}}(\&raw\_gyro);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00420}00420\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00421}00421\ \ \ \textcolor{comment}{//\ The\ MPU6050\ is\ configured\ for\ +/-\/250\ dps\ range,\ with\ a\ resolution\ of\ 16\ bits.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00422}00422\ \ \ \textcolor{comment}{//\ The\ conversion\ factor\ is\ 250.0\ dps\ /\ 32768.0\ LSB.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00423}00423\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ scale\_factor\ =\ 250.0\ /\ 32768.0;}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00424}00424\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00425}00425\ \ \ gyro\_dps-\/>\mbox{\hyperlink{structgyro__float__data__t_aeece2f6f1e411a60ea7f82a2d8cfe6f3}{x}}\ =\ (float)raw\_gyro.\mbox{\hyperlink{structgyro__data__t_a46ad0e29684b152863913763b1c7a7aa}{x}}\ *\ scale\_factor;}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00426}00426\ \ \ gyro\_dps-\/>\mbox{\hyperlink{structgyro__float__data__t_aeb79091bd2205bee812f5a74d0423c4d}{y}}\ =\ (float)raw\_gyro.\mbox{\hyperlink{structgyro__data__t_a529b8ebb86c46804d3510bda2ab5f57e}{y}}\ *\ scale\_factor;}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00427}00427\ \ \ gyro\_dps-\/>\mbox{\hyperlink{structgyro__float__data__t_aa66ac75a9c10ef2bd128d18097f6bda5}{z}}\ =\ (float)raw\_gyro.\mbox{\hyperlink{structgyro__data__t_a9c6c9ad873619cc6fc940cff2fafcac6}{z}}\ *\ scale\_factor;}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00428}00428\ \}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00429}00429\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00438}\mbox{\hyperlink{group__mpu6050__driver_ga803e1e65c21c5b78c99210afee6c8044}{00438}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{group__mpu6050__driver_ga803e1e65c21c5b78c99210afee6c8044}{mpu6050\_read\_temp\_celsius}}(\mbox{\hyperlink{structtemp__float__data__t}{temp\_float\_data\_t}}*\ temp\_c)\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00439}00439\ \ \ uint8\_t\ buffer[2];}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00440}00440\ \ \ \mbox{\hyperlink{group__mpu6050__driver_ga0120bfecb4935f28380174f5b8903856}{mpu6050\_read\_bytes}}(\mbox{\hyperlink{group__mpu6050__driver_gac0a6cab209fbf707e4b0c5426e89e458}{MPU6050\_TEMP\_OUT\_H\_REG}},\ buffer,\ 2);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00441}00441\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00442}00442\ \ \ int16\_t\ raw\_temp\ =\ (int16\_t)(buffer[0]\ <<\ 8\ |\ buffer[1]);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00443}00443\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00444}00444\ \ \ \textcolor{comment}{//\ The\ conversion\ formula\ for\ MPU6050\ temperature\ is\ from\ the\ datasheet:}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00445}00445\ \ \ \textcolor{comment}{//\ Temperature\ in\ C\ =\ ((raw\_temp)\ /\ 340.0)\ +\ 36.53}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00446}00446\ \ \ temp\_c-\/>\mbox{\hyperlink{structtemp__float__data__t_a690eebced6bdb08517b937f9ccc14b1c}{c}}\ =\ ((float)raw\_temp\ /\ 340.0)\ +\ 36.53;}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00447}00447\ \}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00448}00448\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00449}00449\ \textcolor{comment}{//\ -\/-\/-\/\ Part\ 3:\ Main\ Sketch\ -\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00450}00450\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00464}\mbox{\hyperlink{group__main__sketch_ga4fc01d736fe50cf5b977f755b675f11d}{00464}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{group__main__sketch_ga4fc01d736fe50cf5b977f755b675f11d}{setup}}()\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00465}00465\ \ \ Serial.begin(115200);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00466}00466\ \ \ \textcolor{keywordflow}{while}\ (!Serial);\ \textcolor{comment}{//\ Wait\ for\ the\ Serial\ port\ to\ connect.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00467}00467\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00468}00468\ \ \ \textcolor{comment}{//\ Set\ the\ SCL\ and\ SDA\ pins\ as\ outputs\ initially,\ and\ then\ let\ the}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00469}00469\ \ \ \textcolor{comment}{//\ I2C\ functions\ manage\ them.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00470}00470\ \ \ pinMode(\mbox{\hyperlink{group__i2c__bit__banging_ga2cade698267beb86ccaa38c14d35ab0f}{I2C\_SDA\_PIN}},\ OUTPUT);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00471}00471\ \ \ pinMode(\mbox{\hyperlink{group__i2c__bit__banging_ga0e4e08bab2fb484136d18b067bef372c}{I2C\_SCL\_PIN}},\ OUTPUT);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00472}00472\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00473}00473\ \ \ \textcolor{comment}{//\ Initialize\ the\ MPU6050.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00474}00474\ \ \ \textcolor{comment}{//\ The\ sensor\ starts\ in\ sleep\ mode,\ so\ we\ need\ to\ wake\ it\ up.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00475}00475\ \ \ \textcolor{comment}{//\ We'll\ write\ a\ 0\ to\ the\ PWR\_MGMT\_1\ register\ to\ wake\ it\ up.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00476}00476\ \ \ \mbox{\hyperlink{group__mpu6050__driver_ga4fc83ca86f303a8dc5d181b7c0789dc1}{mpu6050\_write\_register}}(\mbox{\hyperlink{group__mpu6050__driver_gac8e6174d5a02ed531329494959e57304}{MPU6050\_PWR\_MGMT\_1\_REG}},\ 0);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00477}00477\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00478}00478\ \ \ \textcolor{comment}{//\ Verify\ the\ MPU6050\ is\ connected\ by\ reading\ the\ WHO\_AM\_I\ register.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00479}00479\ \ \ \textcolor{comment}{//\ It\ should\ return\ 0x68.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00480}00480\ \ \ uint8\_t\ who\_am\_i\ =\ \mbox{\hyperlink{group__mpu6050__driver_ga1e638f29b9df6e977fdf1f7222bc9ee4}{mpu6050\_read\_register}}(\mbox{\hyperlink{group__mpu6050__driver_ga7292e8b450174614ce5bd411ec98ac56}{MPU6050\_WHO\_AM\_I\_REG}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00481}00481\ \ \ \textcolor{keywordflow}{if}\ (who\_am\_i\ !=\ \mbox{\hyperlink{group__mpu6050__driver_ga6a26d06d2f863deedd849612a6c2a4e4}{MPU6050\_ADDRESS}})\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00482}00482\ \ \ \ \ Serial.print(\textcolor{stringliteral}{"{}MPU6050\ not\ found!\ WHO\_AM\_I\ returned:\ 0x"{}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00483}00483\ \ \ \ \ Serial.println(who\_am\_i,\ HEX);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00484}00484\ \ \ \ \ \textcolor{keywordflow}{while}\ (1);\ \textcolor{comment}{//\ Halt\ the\ program\ if\ the\ sensor\ is\ not\ found.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00485}00485\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00486}00486\ \ \ \ \ Serial.println(\textcolor{stringliteral}{"{}MPU6050\ found\ and\ initialized\ successfully."{}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00487}00487\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00488}00488\ \}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00489}00489\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00498}\mbox{\hyperlink{group__main__sketch_gafe461d27b9c48d5921c00d521181f12f}{00498}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{group__main__sketch_gafe461d27b9c48d5921c00d521181f12f}{loop}}()\ \{}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00499}00499\ \ \ \mbox{\hyperlink{structaccel__float__data__t}{accel\_float\_data\_t}}\ accel\_g;}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00500}00500\ \ \ \mbox{\hyperlink{structgyro__float__data__t}{gyro\_float\_data\_t}}\ gyro\_dps;}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00501}00501\ \ \ \mbox{\hyperlink{structtemp__float__data__t}{temp\_float\_data\_t}}\ temp\_c;}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00502}00502\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00503}00503\ \ \ \textcolor{comment}{//\ Read\ the\ latest\ sensor\ data\ and\ convert\ to\ float\ values.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00504}00504\ \ \ \mbox{\hyperlink{group__mpu6050__driver_gae6818ef9d99e8293c55b0e2ae12a4bc9}{mpu6050\_read\_accel\_g}}(\&accel\_g);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00505}00505\ \ \ \mbox{\hyperlink{group__mpu6050__driver_ga7b86e12141f8e0f7e45864785e048ff4}{mpu6050\_read\_gyro\_dps}}(\&gyro\_dps);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00506}00506\ \ \ \mbox{\hyperlink{group__mpu6050__driver_ga803e1e65c21c5b78c99210afee6c8044}{mpu6050\_read\_temp\_celsius}}(\&temp\_c);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00507}00507\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00508}00508\ \ \ \textcolor{comment}{//\ Print\ the\ converted\ sensor\ data\ to\ the\ Serial\ Monitor.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00509}00509\ \ \ Serial.print(\textcolor{stringliteral}{"{}Accel:\ "{}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00510}00510\ \ \ Serial.print(\textcolor{stringliteral}{"{}X="{}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00511}00511\ \ \ Serial.print(accel\_g.\mbox{\hyperlink{structaccel__float__data__t_ad332b06a0c8851338f01d2c32688c9f0}{x}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00512}00512\ \ \ Serial.print(\textcolor{stringliteral}{"{}g,\ Y="{}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00513}00513\ \ \ Serial.print(accel\_g.\mbox{\hyperlink{structaccel__float__data__t_a3735ba6870821476e506873601e2a716}{y}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00514}00514\ \ \ Serial.print(\textcolor{stringliteral}{"{}g,\ Z="{}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00515}00515\ \ \ Serial.print(accel\_g.\mbox{\hyperlink{structaccel__float__data__t_a8aacea966ced911d504261ecb3f953ab}{z}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00516}00516\ \ \ Serial.print(\textcolor{stringliteral}{"{}g"{}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00517}00517\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00518}00518\ \ \ Serial.print(\textcolor{stringliteral}{"{}\ |\ Gyro:\ "{}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00519}00519\ \ \ Serial.print(\textcolor{stringliteral}{"{}X="{}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00520}00520\ \ \ Serial.print(gyro\_dps.\mbox{\hyperlink{structgyro__float__data__t_aeece2f6f1e411a60ea7f82a2d8cfe6f3}{x}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00521}00521\ \ \ Serial.print(\textcolor{stringliteral}{"{}dps,\ Y="{}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00522}00522\ \ \ Serial.print(gyro\_dps.\mbox{\hyperlink{structgyro__float__data__t_aeb79091bd2205bee812f5a74d0423c4d}{y}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00523}00523\ \ \ Serial.print(\textcolor{stringliteral}{"{}dps,\ Z="{}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00524}00524\ \ \ Serial.print(gyro\_dps.\mbox{\hyperlink{structgyro__float__data__t_aa66ac75a9c10ef2bd128d18097f6bda5}{z}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00525}00525\ \ \ Serial.print(\textcolor{stringliteral}{"{}dps"{}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00526}00526\ \ \ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00527}00527\ \ \ Serial.print(\textcolor{stringliteral}{"{}\ |\ Temp:\ "{}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00528}00528\ \ \ Serial.print(temp\_c.\mbox{\hyperlink{structtemp__float__data__t_a690eebced6bdb08517b937f9ccc14b1c}{c}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00529}00529\ \ \ Serial.println(\textcolor{stringliteral}{"{}\ C"{}});}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00530}00530\ }
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00531}00531\ \ \ \textcolor{comment}{//\ Wait\ a\ bit\ before\ the\ next\ reading\ to\ not\ flood\ the\ serial\ monitor.}}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00532}00532\ \ \ delay(100);}
+\DoxyCodeLine{\Hypertarget{low__level__mpu6050__interfacing_8ino_source_l00533}00533\ \}}
+
+\end{DoxyCode}

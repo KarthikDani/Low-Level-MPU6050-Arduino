@@ -1,0 +1,101 @@
+\doxysection{low\+\_\+level\+\_\+mpu6050\+\_\+interfacing.\+ino File Reference}
+\hypertarget{low__level__mpu6050__interfacing_8ino}{}\label{low__level__mpu6050__interfacing_8ino}\index{low\_level\_mpu6050\_interfacing.ino@{low\_level\_mpu6050\_interfacing.ino}}
+
+
+Implementing bit-\/banging I2C driver to interface with MPU6050 sensor without using standard libraries.  
+
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structaccel__data__t}{accel\+\_\+data\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em A structure to hold the raw 16-\/bit accelerometer data. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structgyro__data__t}{gyro\+\_\+data\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em A structure to hold the raw 16-\/bit gyroscope data. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structaccel__float__data__t}{accel\+\_\+float\+\_\+data\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em A structure to hold the converted float accelerometer data in g\textquotesingle{}s. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structgyro__float__data__t}{gyro\+\_\+float\+\_\+data\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em A structure to hold the converted float gyroscope data in degrees per second. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structtemp__float__data__t}{temp\+\_\+float\+\_\+data\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em A structure to hold the converted float temperature data in Celsius. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{group__i2c__bit__banging_ga2cade698267beb86ccaa38c14d35ab0f}{I2\+C\+\_\+\+SDA\+\_\+\+PIN}}~A4
+\begin{DoxyCompactList}\small\item\em Define the pin for the I2C Serial Data (SDA) line. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__i2c__bit__banging_ga0e4e08bab2fb484136d18b067bef372c}{I2\+C\+\_\+\+SCL\+\_\+\+PIN}}~A5
+\begin{DoxyCompactList}\small\item\em Define the pin for the I2C Serial Clock (SCL) line. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__i2c__bit__banging_gacd21d014f44f0746ed1950d04f3ab43e}{I2\+C\+\_\+\+DELAY\+\_\+\+US}}~5
+\begin{DoxyCompactList}\small\item\em A small delay in microseconds to meet I2C timing specifications. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__mpu6050__driver_ga6a26d06d2f863deedd849612a6c2a4e4}{MPU6050\+\_\+\+ADDRESS}}~0x68
+\begin{DoxyCompactList}\small\item\em The default I2C address of the MPU6050 (when AD0 is grounded). \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__mpu6050__driver_ga7292e8b450174614ce5bd411ec98ac56}{MPU6050\+\_\+\+WHO\+\_\+\+AM\+\_\+\+I\+\_\+\+REG}}~0x75
+\begin{DoxyCompactList}\small\item\em The address of the WHO\+\_\+\+AM\+\_\+I register, which should contain 0x68. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__mpu6050__driver_gac8e6174d5a02ed531329494959e57304}{MPU6050\+\_\+\+PWR\+\_\+\+MGMT\+\_\+1\+\_\+\+REG}}~0x6B
+\begin{DoxyCompactList}\small\item\em The address of the Power Management 1 register. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__mpu6050__driver_gaeab81c73034a21153b844f22a0014014}{MPU6050\+\_\+\+ACCEL\+\_\+\+XOUT\+\_\+\+H\+\_\+\+REG}}~0x3B
+\begin{DoxyCompactList}\small\item\em The address of the high byte of the X-\/axis accelerometer data. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__mpu6050__driver_ga3f8f12551c1f0dc6fed6deed880bf1ce}{MPU6050\+\_\+\+ACCEL\+\_\+\+XOUT\+\_\+\+L\+\_\+\+REG}}~0x3C
+\begin{DoxyCompactList}\small\item\em The address of the low byte of the X-\/axis accelerometer data. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__mpu6050__driver_gaeae6c0fbc47aa2c613342fce2cc45372}{MPU6050\+\_\+\+GYRO\+\_\+\+XOUT\+\_\+\+H\+\_\+\+REG}}~0x43
+\begin{DoxyCompactList}\small\item\em The address of the high byte of the X-\/axis gyroscope data. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__mpu6050__driver_ga6356f82a3d376ab0068744257aa65998}{MPU6050\+\_\+\+GYRO\+\_\+\+XOUT\+\_\+\+L\+\_\+\+REG}}~0x44
+\begin{DoxyCompactList}\small\item\em The address of the low byte of the X-\/axis gyroscope data. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__mpu6050__driver_gac0a6cab209fbf707e4b0c5426e89e458}{MPU6050\+\_\+\+TEMP\+\_\+\+OUT\+\_\+\+H\+\_\+\+REG}}~0x41
+\begin{DoxyCompactList}\small\item\em The address of the high byte of the temperature data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{group__i2c__bit__banging_gaac96cb4832eec6436e192e9948fa5c60}{i2c\+\_\+sda\+\_\+high}} ()
+\begin{DoxyCompactList}\small\item\em Sets the SDA line high by configuring the pin as an input with the internal pull-\/up disabled. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__i2c__bit__banging_ga9233e603e8047e4b3d34fd32f5f0d200}{i2c\+\_\+sda\+\_\+low}} ()
+\begin{DoxyCompactList}\small\item\em Sets the SDA line low. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__i2c__bit__banging_gacededb6b0df81968e26522ff4249fe5f}{i2c\+\_\+scl\+\_\+high}} ()
+\begin{DoxyCompactList}\small\item\em Sets the SCL line high. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__i2c__bit__banging_gab28495cecbec9b9e075af98d8dc87057}{i2c\+\_\+scl\+\_\+low}} ()
+\begin{DoxyCompactList}\small\item\em Sets the SCL line low. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{group__i2c__bit__banging_gad88c7dd0081c12a4e2f317d230a73d25}{i2c\+\_\+read\+\_\+sda}} ()
+\begin{DoxyCompactList}\small\item\em Reads the current state of the SDA pin. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__i2c__bit__banging_gafa8b4a70b38269978478d3c2c01ad6af}{i2c\+\_\+start}} ()
+\begin{DoxyCompactList}\small\item\em Generates the I2C START condition. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__i2c__bit__banging_ga5149736c791184da23d658764e9da861}{i2c\+\_\+stop}} ()
+\begin{DoxyCompactList}\small\item\em Generates the I2C STOP condition. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{group__i2c__bit__banging_gaafc0ee8bf1132c5e628ba6c88a4976b6}{i2c\+\_\+write\+\_\+byte}} (uint8\+\_\+t data)
+\begin{DoxyCompactList}\small\item\em Writes a single byte over the I2C bus. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{group__i2c__bit__banging_ga64b014f36d2926812e24d6f3be8e126b}{i2c\+\_\+read\+\_\+byte}} (bool ack)
+\begin{DoxyCompactList}\small\item\em Reads a single byte from the I2C bus. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__mpu6050__driver_ga4fc83ca86f303a8dc5d181b7c0789dc1}{mpu6050\+\_\+write\+\_\+register}} (uint8\+\_\+t reg, uint8\+\_\+t value)
+\begin{DoxyCompactList}\small\item\em Writes a single byte to a specified register on the MPU6050. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{group__mpu6050__driver_ga1e638f29b9df6e977fdf1f7222bc9ee4}{mpu6050\+\_\+read\+\_\+register}} (uint8\+\_\+t reg)
+\begin{DoxyCompactList}\small\item\em Reads a single byte from a specified register on the MPU6050. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__mpu6050__driver_ga0120bfecb4935f28380174f5b8903856}{mpu6050\+\_\+read\+\_\+bytes}} (uint8\+\_\+t reg, uint8\+\_\+t \texorpdfstring{$\ast$}{*}buffer, uint8\+\_\+t count)
+\begin{DoxyCompactList}\small\item\em Reads multiple consecutive bytes from the MPU6050, starting from a given register. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__mpu6050__driver_ga7254d98b858439f756cf53e8e2655883}{mpu6050\+\_\+read\+\_\+accel\+\_\+data}} (\mbox{\hyperlink{structaccel__data__t}{accel\+\_\+data\+\_\+t}} \texorpdfstring{$\ast$}{*}accel)
+\begin{DoxyCompactList}\small\item\em Reads and combines the raw 16-\/bit accelerometer data into a struct. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__mpu6050__driver_ga1ec0e6a3ef7b7258f4169598f85aab90}{mpu6050\+\_\+read\+\_\+gyro\+\_\+data}} (\mbox{\hyperlink{structgyro__data__t}{gyro\+\_\+data\+\_\+t}} \texorpdfstring{$\ast$}{*}gyro)
+\begin{DoxyCompactList}\small\item\em Reads and combines the raw 16-\/bit gyroscope data into a struct. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__mpu6050__driver_gae6818ef9d99e8293c55b0e2ae12a4bc9}{mpu6050\+\_\+read\+\_\+accel\+\_\+g}} (\mbox{\hyperlink{structaccel__float__data__t}{accel\+\_\+float\+\_\+data\+\_\+t}} \texorpdfstring{$\ast$}{*}accel\+\_\+g)
+\begin{DoxyCompactList}\small\item\em Reads raw accelerometer data and converts it to G\textquotesingle{}s. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__mpu6050__driver_ga7b86e12141f8e0f7e45864785e048ff4}{mpu6050\+\_\+read\+\_\+gyro\+\_\+dps}} (\mbox{\hyperlink{structgyro__float__data__t}{gyro\+\_\+float\+\_\+data\+\_\+t}} \texorpdfstring{$\ast$}{*}gyro\+\_\+dps)
+\begin{DoxyCompactList}\small\item\em Reads raw gyroscope data and converts it to degrees per second. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__mpu6050__driver_ga803e1e65c21c5b78c99210afee6c8044}{mpu6050\+\_\+read\+\_\+temp\+\_\+celsius}} (\mbox{\hyperlink{structtemp__float__data__t}{temp\+\_\+float\+\_\+data\+\_\+t}} \texorpdfstring{$\ast$}{*}temp\+\_\+c)
+\begin{DoxyCompactList}\small\item\em Reads temperature data and converts it to Celsius. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__main__sketch_ga4fc01d736fe50cf5b977f755b675f11d}{setup}} ()
+\begin{DoxyCompactList}\small\item\em The setup function, called once at the start of the program. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__main__sketch_gafe461d27b9c48d5921c00d521181f12f}{loop}} ()
+\begin{DoxyCompactList}\small\item\em The main loop, which runs repeatedly after setup. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Implementing bit-\/banging I2C driver to interface with MPU6050 sensor without using standard libraries. 
+
+Low-\/level I2C protocol, MPU6050 driver functions to read accelerometer and gyroscope data directly from the sensor. \begin{DoxyAuthor}{Author}
+Karthik M Dani (\href{https://karthikdani.vercel.app}{\texttt{ https\+://karthikdani.\+vercel.\+app}}) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+August 2, 2025 
+\end{DoxyDate}
+
+
+Definition in file \mbox{\hyperlink{low__level__mpu6050__interfacing_8ino_source}{low\+\_\+level\+\_\+mpu6050\+\_\+interfacing.\+ino}}.
+
