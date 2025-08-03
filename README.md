@@ -8,6 +8,13 @@ A set of high-level functions designed specifically to interact with the MPU6050
 - Acceleration in G's
 - Angular velocity in degrees per second (dps)
 - Temperature in Celsius
+  
+## Features
+- Manually implemented Bit Banged I2C protocol.
+- No external libraries are needed to communicate with the sensor.
+- Functions to read raw 16-bit accelerometer, gyroscope, and temperature data.
+- Converts raw sensor data to standard units (g's, degrees per second, and Celsius).
+- Continuously prints formatted sensor data to the serial monitor.
 
 ## Technical Breakdown
 The project is structured into two main layers, organized by Doxygen-style comments in the code. Statically hosted Documentation can be found at: https://karthikdani.github.io/Low-Level-MPU6050-Arduino/topics.html
@@ -45,6 +52,32 @@ This layer communicates with the MPU6050's internal registers. It handles the de
   - `TEMP_OUT_H_REG` (0x41): High byte of the temperature data.
 
 The MPU6050's I2C implementation supports an auto-increment feature. which means the sensor automatically increments the register address for subsequent bytes. The `mpu6050_read_bytes()` takes advantage of this by reading 6 consecutive bytes to get all three accelerometer axis values, and another 6 for the gyroscope data, and 2 for the temperature. The high and low bytes are then combined using bitwise shifting (<< 8) and a bitwise OR (|) to form a single 16-bit signed integer.
+
+## Wiring
+
+| MPU6050 Pin | Arduino Pin |
+|-------------|-------------|
+| VCC         | 5V          |
+| GND         | GND         |
+| SDA         | A4          |
+| SCL         | A5          |
+| AD0         | GND (Default) |
+
+
+## Expected Output
+
+When the Arduino starts, it will first print:
+
+```
+MPU6050 found and initialized successfully.
+```
+
+After initialization, the sketch will begin to print a new line of data approximately every 100 milliseconds. The output will look similar to this, with the numerical values changing based on the sensor's movement and temperature:
+
+```
+Accel: X=0.04g, Y=0.08g, Z=0.98g | Gyro: X=1.23dps, Y=-0.54dps, Z=0.11dps | Temp: 25.43 C
+```
+
 
 ---
 
